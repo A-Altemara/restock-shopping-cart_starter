@@ -90,8 +90,8 @@ const Products = (props) => {
 	const addToCart = (e) => {
 		let name = e.target.name;
 		let item = items.filter((item) => item.name == name);
-		if (item[0].instock == 0) return;
-		item[0].instock = item[0].instock - 1;
+		if (item[0].instock === 0) return;
+		item[0].instock -= 1;
 		console.log(`add to Cart ${JSON.stringify(item)}`);
 		setCart([...cart, ...item]);
 	};
@@ -110,11 +110,8 @@ const Products = (props) => {
 	const photos = ["apple.png", "orange.png", "beans.png", "cabbage.png"];
 
 	let list = items.map((item, index) => {
-		let n = index + 1049;
+		let n = index + 69;
 		let uhit = "http://picsum.photos/" + n;
-		// // note, source.unsplash is used here because it loads images faster than picsum.photos
-		// // it should functionally be the same as picsum.photos which is shown in the videos
-		// let uhit = "https://source.unsplash.com/random/800x800/?img=" + n;
 
 		return (
 			<li key={index}>
