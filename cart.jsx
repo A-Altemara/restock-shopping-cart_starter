@@ -90,24 +90,36 @@ const Products = (props) => {
 	const addToCart = (e) => {
 		let name = e.target.name;
 		let item = items.filter((item) => item.name == name);
+		if (item[0].instock == 0) return;
+		item[0].instock = item[0].instock - 1;
 		console.log(`add to Cart ${JSON.stringify(item)}`);
 		setCart([...cart, ...item]);
-		//doFetch(query);
 	};
-	const deleteCartItem = (index) => {
-		let newCart = cart.filter((item, i) => index != i);
+	const deleteCartItem = (delIndex) => {
+		// this is the index in the cart not in the Product List
+
+		let newCart = cart.filter((item, i) => delIndex != i);
+		let target = cart.filter((item, index) => delIndex == index);
+		let newItems = items.map((item, index) => {
+			if (item.name == target[0].name) item.instock = item.instock + 1;
+			return item;
+		});
 		setCart(newCart);
+		setItems(newItems);
 	};
 	const photos = ["apple.png", "orange.png", "beans.png", "cabbage.png"];
 
 	let list = items.map((item, index) => {
-		//let n = index + 1049;
-		//let url = "https://picsum.photos/id/" + n + "/50/50";
+		let n = index + 1049;
+		let uhit = "http://picsum.photos/" + n;
+		// // note, source.unsplash is used here because it loads images faster than picsum.photos
+		// // it should functionally be the same as picsum.photos which is shown in the videos
+		// let uhit = "https://source.unsplash.com/random/800x800/?img=" + n;
 
 		return (
 			<li key={index}>
 				<Image
-					src={photos[index % 4]}
+					src={uhit}
 					width={70}
 					roundedCircle
 				></Image>
